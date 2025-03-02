@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import bookReducer from "./bookSlice";
-import { Book } from "../app/library/types";
+import { Book } from "../app/types";
 import favoritesReducer from "./favoritesSlice";
 import authReducer from "./authSlice";
 

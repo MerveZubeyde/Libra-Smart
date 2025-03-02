@@ -2,56 +2,59 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { RootState, AppDispatch } from "../../redux/store";
 import { fetchBooks } from "../../redux/bookSlice";
-import { Book } from "./types";
+import { Book } from "../types";
+import BookCard from "../../components/BookCard";
 
 export default function LibraryPage() {
-  const dispatch = useDispatch();
-  const books = useSelector((state: RootState) => state.books.books);
   const [loading, setLoading] = useState(false);
-  const [filteredBooks, setFilteredBooks] = useState<Book[]>(books);
-  const [search, setSearch] = useState("");
+  const dispatch = useDispatch<AppDispatch>();
+  const { books, status } = useSelector(
+    (state: RootState) => state.books as { books: Book[]; status: string }
+  );
 
   useEffect(() => {
-    setLoading(true);
-    dispatch(fetchBooks("") as any)
-      .unwrap()
-      .then(() => setLoading(false))
-      .catch(() => setLoading(false));
+    const fetchData = async () => {
+      setLoading(true);
+      await dispatch(fetchBooks(""));
+      setLoading(false);
+    };
+
+    fetchData();
   }, [dispatch]);
 
   useEffect(() => {
-    setFilteredBooks(
-      books.filter((book: Book) =>
-        book.title.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [books, search]);
+    if (books.length > 0) {
+      console.log("Books:", books);
+      books.forEach((book) => console.log(book.id));
+    } else {
+      console.log("No books found or books array is empty.");
+    }
+  }, [books]);
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (status === "loading") {
+    return <p>Loading...</p>;
+  }
+
+  if (status === "failed") {
+    return <p>Error fetching books.</p>;
   }
 
   return (
-    <div>
-      <h1>Library</h1>
+    <div className="p-10">
+      <h1 className="text-3xl font-bold p-6">Library</h1>
 
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search for books..."
-      />
-      <ul>
-        {filteredBooks.length > 0 ? (
-          filteredBooks.map((book) => (
-            <li key={book.id}>
-              <h3>{book.title}</h3>
-              <p>{book.author}</p>
-              <button>Add to Favorites</button>
-            </li>
-          ))
+      <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-10 m-5">
+        {books.length > 0 ? (
+          books.map((book: Book) => {
+            const key = book.id ?? book.title;
+            return (
+              <li key={key} className="flex justify-center">
+                <BookCard book={book} />
+              </li>
+            );
+          })
         ) : (
           <p>No books found.</p>
         )}
