@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Book } from "../app/types";
-
-interface FavoritesState {
-  books: Book[];
-}
+import { Book, FavoritesState } from "../app/types";
 
 const initialState: FavoritesState = {
   books: [],
@@ -14,22 +10,14 @@ const favoritesSlice = createSlice({
   initialState,
   reducers: {
     addFavorite: (state, action: PayloadAction<Book>) => {
-      if (
-        !state.books.some(
-          (book) => book.primary_isbn10 === action.payload.primary_isbn10
-        )
-      ) {
+      if (!state.books.some((book) => book.key === action.payload.key)) {
         state.books.push(action.payload);
       }
     },
-    removeFavorite: (
-      state,
-      action: PayloadAction<{ primary_isbn10: string }>
-    ) => {
+    removeFavorite: (state, action: PayloadAction<{ key: string }>) => {
       state.books = state.books.filter(
-        (book) => book.primary_isbn10 !== action.payload.primary_isbn10
+        (book) => book.key !== action.payload.key
       );
-      console.log("Removing book with ISBN:", action.payload.primary_isbn10);
     },
   },
 });

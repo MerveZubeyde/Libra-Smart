@@ -4,8 +4,7 @@ import { fetchBooksFromAPI } from "../services/bookService";
 export const fetchBooks = createAsyncThunk(
   "books/fetchBooks",
   async (query: string) => {
-    const books = await fetchBooksFromAPI(query);
-    return books;
+    return await fetchBooksFromAPI(query);
   }
 );
 

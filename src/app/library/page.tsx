@@ -6,32 +6,30 @@ import { RootState, AppDispatch } from "../../redux/store";
 import { fetchBooks } from "../../redux/bookSlice";
 import { Book } from "../types";
 import BookCard from "../../components/BookCard";
+import CategoryFilter from "../../components/CategoryFilter";
 
 export default function LibraryPage() {
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const { books, status } = useSelector(
     (state: RootState) => state.books as { books: Book[]; status: string }
   );
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      await dispatch(fetchBooks(""));
-      setLoading(false);
-    };
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
-    fetchData();
-  }, [dispatch]);
+  const categories = ["fiction", "nonfiction", "science", "history", "mystery"];
 
   useEffect(() => {
-    if (books.length > 0) {
-      console.log("Books:", books);
-      books.forEach((book) => console.log(book.id));
+    if (selectedCategory) {
+      dispatch(fetchBooks(selectedCategory));
     } else {
-      console.log("No books found or books array is empty.");
+      dispatch(fetchBooks(""));
     }
-  }, [books]);
+  }, [dispatch, selectedCategory]);
+  console.log(books);
+
+  const handleFilterChange = (category: string) => {
+    setSelectedCategory(category);
+  };
 
   if (status === "loading") {
     return <p>Loading...</p>;
@@ -43,18 +41,18 @@ export default function LibraryPage() {
 
   return (
     <div className="p-10">
-      <h1 className="text-3xl font-bold p-6">Library</h1>
-
+      <h1 className="flex text-4xl justify-center font-bold p-6">Library</h1>
+      <CategoryFilter
+        categories={categories}
+        onFilterChange={handleFilterChange}
+      />
       <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-10 m-5">
         {books.length > 0 ? (
-          books.map((book: Book) => {
-            const key = book.id ?? book.title;
-            return (
-              <li key={key} className="flex justify-center">
-                <BookCard book={book} />
-              </li>
-            );
-          })
+          books.map((book: Book) => (
+            <li key={book.key} className="flex justify-center">
+              <BookCard book={book} />
+            </li>
+          ))
         ) : (
           <p>No books found.</p>
         )}

@@ -1,11 +1,10 @@
 export interface Book {
-  id: string;
+  key: string;
   title: string;
-  author: string;
-  year: number;
-  cover: string;
-  isbn: string;
-  primary_isbn10: string;
+  authorname: string[];
+  first_publish_year: number;
+  cover_edition_key?: string;
+  authors?: { name: string }[];
 }
 
 export interface BookCardProps {
@@ -15,12 +14,9 @@ export interface BookCardProps {
 export interface NavbarProps {
   setActivePage: React.Dispatch<React.SetStateAction<string>>;
 }
-export interface BookCardProps {
-  book: Book;
-}
 
 export interface BooksState {
-  books: never[];
+  books: Book[];
   status: string;
   error: string | null;
 }
@@ -32,3 +28,23 @@ export interface FavoritesState {
 export interface AuthState {
   user: string | null;
 }
+
+export interface CategoryFilterProps {
+  categories: string[];
+  onFilterChange: (category: string) => void;
+}
+
+export interface SignOutSuccess {
+    message: string;
+  }
+  
+export interface SignOutError {
+    error: Error;
+  }
+
+ export interface User {
+    User: string;
+    displayName?: string | null;
+    email?: string | null;
+    photoURL?: string | null;
+  }

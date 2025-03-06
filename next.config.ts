@@ -1,8 +1,8 @@
-import { NextConfig } from 'next';
-
-const nextConfig: NextConfig = {
-  experimental: {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  env: {
+    API_KEY: process.env.API_KEY, 
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
