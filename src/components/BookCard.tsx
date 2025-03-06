@@ -1,8 +1,6 @@
-"use client";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { Book } from "../app/types";
 import { addFavorite, removeFavorite } from "../redux/favoritesSlice";
 import { BookCardProps } from "../app/types";
 

@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
@@ -27,7 +26,6 @@ export default function LibraryPage() {
   useEffect(() => {
     if (books.length > 0) {
       console.log("Books:", books);
-      books.forEach((book) => console.log(book.id));
     } else {
       console.log("No books found or books array is empty.");
     }
