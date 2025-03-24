@@ -27,29 +27,29 @@ export default function FavoritesList() {
   };
 
   return (
-    <div className="w-full p-6 bg-gradient-to-br from-gray-200 via-gray-300 to-gray-400 rounded-lg">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">
+    <div className="w-full max-w-3xl mx-auto p-6 bg-gradient-to-br from-blue-100 via-gray-300 to-blue-300 rounded-lg sm:bg-transparent">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center sm:text-left">
         Your Favorite Books
       </h2>
-      <div className="space-y-6 max-w-4xl mx-auto">
+      <div className="space-y-4">
         {favoriteBooks.map((book) => (
           <div
             key={book.key}
-            className="flex justify-between items-center p-6 bg-gradient-to-br from-gray-50 to-gray-250 rounded-lg  hover:shadow-lg transition-shadow duration-300"
+            className="relative flex flex-col sm:flex-row justify-between items-start p-4 bg-gradient-to-br from-gray-50 to-gray-200 rounded-lg hover:shadow-lg transition-shadow duration-300 sm:bg-transparent sm:p-2 sm:space-x-4"
           >
-            <div className="flex flex-col space-y-1">
+            <div className="text-center sm:text-left w-full">
               <h3 className="text-xl font-semibold text-gray-800">
                 {book.title}
               </h3>
-              <p className="text-sm text-gray-600 mb-0">{book.authorname}</p>
-              <p className="text-sm text-gray-500 mt-0">{book.first_publish_year}</p>
+              <p className="text-sm text-gray-600">{book.authorname}</p>
+              <p className="text-sm text-gray-500">{book.first_publish_year}</p>
             </div>
             <button
-                  onClick={() => handleRemoveFavorite(book)}
-                  className="flex items-center justify-center p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200"
-                >
-                  <HiOutlineX className="text-2xl" />
-                </button>
+              onClick={() => handleRemoveFavorite(book)}
+              className="absolute top-3 right-3 sm:static p-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all duration-200"
+            >
+              <HiOutlineX className="text-2xl" />
+            </button>
           </div>
         ))}
       </div>

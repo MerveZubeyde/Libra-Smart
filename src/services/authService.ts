@@ -4,7 +4,6 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../../firebaseConfig";
-import { SignOutError, SignOutSuccess } from "../app/types";
 
 export const signUp = async (email: string, password: string) => {
   try {

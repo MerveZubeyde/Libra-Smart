@@ -30,8 +30,18 @@ export default function LibraryPage() {
     setSelectedCategory(category);
   };
 
+  const renderLoadingPlaceholders = () => (
+    <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 sm:p-8">
+      {new Array(6).fill(null).map((_, index) => (
+        <li key={index} className="flex justify-center">
+          <div className="w-full sm:w-[260px] h-[420px] bg-gray-300 rounded-lg animate-pulse shadow-md"></div>
+        </li>
+      ))}
+    </ul>
+  );
+
   if (status === "loading") {
-    return <p>Loading...</p>;
+    return renderLoadingPlaceholders();
   }
 
   if (status === "failed") {
@@ -39,13 +49,15 @@ export default function LibraryPage() {
   }
 
   return (
-    <div className="p-10">
-      <h1 className="flex text-4xl justify-center font-bold p-6">Library</h1>
+    <div className="p-6 sm:p-8">
+      <h1 className="text-3xl sm:text-4xl font-bold text-center mb-6">
+        Library
+      </h1>
       <CategoryFilter
         categories={categories}
         onFilterChange={handleFilterChange}
       />
-      <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-10 m-5">
+      <ul className="mt-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6 sm:p-8">
         {books.length > 0 ? (
           books.map((book: Book) => (
             <li key={book.key} className="flex justify-center">
@@ -53,7 +65,7 @@ export default function LibraryPage() {
             </li>
           ))
         ) : (
-          <p>No books found.</p>
+          <p className="text-center text-gray-600 mt-6">No books found.</p>
         )}
       </ul>
     </div>

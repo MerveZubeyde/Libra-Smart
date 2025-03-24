@@ -3,17 +3,48 @@
 @import "tailwindcss/utilities";
 
 :root {
-  --background: #1a202c; 
+  --background: #1a202c;
   --foreground: #e2e8f0;
-  --accent: #4FD1C5; 
-  --error-red: #E53E3E; 
-  --success-green: #48BB78; 
+  --accent: #4fd1c5;
+  --error-red: #e53e3e;
+  --success-green: #48bb78;
+}
+
+html {
+  font-size: 16px;
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
 }
 
 body {
   color: var(--foreground);
   background-color: var(--background);
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 0.5rem;
+  }
 }

@@ -2,12 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import {
-  HiOutlineMenuAlt3,
-  HiOutlineX,
-  HiHome,
-  HiHeart,
-} from "react-icons/hi";
+import { HiOutlineMenuAlt3, HiOutlineX, HiHome, HiHeart } from "react-icons/hi";
 import { motion } from "framer-motion";
 
 export default function Sidebar() {
@@ -20,27 +15,34 @@ export default function Sidebar() {
   };
 
   const isActive = (path: string) =>
-    pathname === path ? "bg-[#FFA500] text-white" : "bg-gray-800 text-gray-300";
+    pathname === path
+      ? "bg-[#FFA500] text-white"
+      : "bg-gray-800 text-gray-300 hover:bg-[#4FD1C5] hover:text-white";
 
   return (
     <div className="relative">
+      {!isOpen && (
+        <motion.button
+          initial={{ opacity: 0, x: -15 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="absolute top-4 left-4 z-50 text-3xl text-gray-400 hover:text-white focus:outline-none"
+          onClick={toggleSidebar}
+        >
+          <HiOutlineMenuAlt3 />
+        </motion.button>
+      )}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black bg-opacity-50"
+          onClick={toggleSidebar}
+        />
+      )}
       <motion.div
-        animate={{ x: isOpen ? 0 : 15 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className={`absolute top-4 left-4 z-50 h-screen text-3xl text-gray-400 hover:text-white focus:outline-none ${
-          isOpen ? "hidden" : "block"
-        }`}
-      >
-        <HiOutlineMenuAlt3 onClick={toggleSidebar} />
-      </motion.div>
-
-      <motion.div
-        initial={{ x: -250 }}
-        animate={{ x: isOpen ? 0 : -250 }}
+        initial={{ x: -300 }}
+        animate={{ x: isOpen ? 0 : -300 }}
         transition={{ type: "spring", stiffness: 100, damping: 50 }}
-        className={`${
-          isOpen ? "w-64" : "w-64"
-        } h-full bg-gradient-to-r from-[#1A202C] to-[#2D3748] text-white border-r-2 border-gray-700 p-6 flex flex-col space-y-6 z-40`}
+        className={`fixed top-0 left-0 h-full w-64 bg-gradient-to-r from-[#1A202C] to-[#2D3748] text-white border-r-2 border-gray-700 p-6 flex flex-col space-y-6 z-50`}
       >
         <div className="flex justify-between items-center">
           <p className="text-lg font-serif italic text-[#eeb947] leading-relaxed mb-8 text-center">
@@ -60,19 +62,25 @@ export default function Sidebar() {
 
         <div className="mt-8 flex flex-col space-y-6">
           <button
-            onClick={() => router.push("/library")}
-            className={`flex items-center space-x-4 p-4 rounded-lg ${isActive(
+            onClick={() => {
+              router.push("/library");
+              setIsOpen(false);
+            }}
+            className={`flex items-center space-x-4 p-4 rounded-lg text-lg font-semibold transition-all duration-300 ${isActive(
               "/library"
-            )} text-lg font-semibold hover:bg-[#4FD1C5]  hover:scale-105 transition-all duration-300`}
+            )}`}
           >
             <HiHome size={20} />
             <span className="text-base">Library</span>
           </button>
           <button
-            onClick={() => router.push("/favorites")}
-            className={`flex items-center space-x-4 p-4 rounded-lg ${isActive(
+            onClick={() => {
+              router.push("/favorites");
+              setIsOpen(false);
+            }}
+            className={`flex items-center space-x-4 p-4 rounded-lg text-lg font-semibold transition-all duration-300 ${isActive(
               "/favorites"
-            )} text-lg font-semibold hover:bg-[#4FD1C5] hover:scale-105 transition-all duration-300`}
+            )}`}
           >
             <HiHeart size={20} />
             <span className="text-base">Favorites</span>

@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyABMrCjKis1m-ebWSjkMtLh8XsHzNQCRRg",
-  authDomain: "libra-smart-ffa5f.firebaseapp.com",
-  projectId: "libra-smart-ffa5f",
-  storageBucket: "libra-smart-ffa5f.firebasestorage.app",
-  messagingSenderId: "358626352418",
-  appId: "1:358626352418:web:c5ac89086b6645281cd97b",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);

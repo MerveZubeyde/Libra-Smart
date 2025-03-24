@@ -22,18 +22,19 @@ export default function CategoryFilter({
       <select
         value={selectedCategory}
         onChange={handleCategoryChange}
-        className="px-6 py-3 bg-gray-800 text-white rounded-lg shadow-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#4FD1C5] transition duration-200"
+        className="px-5 py-3 bg-gray-800 text-white rounded-lg shadow-md border border-gray-600 focus:outline-none focus:ring-2 focus:ring-[#4FD1C5] transition duration-200"
       >
         <option value="">Select a category</option>
         {categories.map((category) => (
           <option key={category} value={category}>
-            {category}
+            {category.charAt(0).toUpperCase() + category.slice(1)}
           </option>
         ))}
       </select>
+
       <button
         onClick={handleApplyFilter}
-        className="px-6 py-3 bg-[#4FD1C5] text-white rounded-lg shadow-md hover:bg-[#38b2ac] focus:outline-none focus:ring-2 focus:ring-[#38b2ac] transition-all duration-300"
+        className="px-5 py-3 bg-[#4FD1C5] text-white rounded-lg shadow-md hover:bg-[#38b2ac] focus:outline-none focus:ring-2 focus:ring-[#38b2ac] transition-all duration-300"
       >
         Apply Filter
       </button>

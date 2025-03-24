@@ -35,16 +35,41 @@ export interface CategoryFilterProps {
 }
 
 export interface SignOutSuccess {
-    message: string;
-  }
-  
-export interface SignOutError {
-    error: Error;
-  }
+  message: string;
+}
 
- export interface User {
-    User: string;
-    displayName?: string | null;
-    email?: string | null;
-    photoURL?: string | null;
-  }
+export interface SignOutError {
+  error: Error;
+}
+
+export interface User {
+  User: string;
+  displayName?: string | null;
+  email?: string | null;
+  photoURL?: string | null;
+}
+
+export interface InputProps {
+  label: string;
+  type: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder: string;
+}
+
+export interface ButtonProps {
+  text: string;
+  type?: "button" | "submit" | "reset";
+  onClick?: () => void;
+}
+
+export interface AuthContainerProps {
+  title: string;
+  subtitle: string;
+  children: React.ReactNode;
+  borderColor: string;
+}
+
+export interface ErrorMessageProps {
+  message: string;
+}
